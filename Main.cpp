@@ -1,272 +1,5 @@
-#include<iostream>
-#include<string>
-#include<ctime>
-#include<conio.h>
-#include<string.h>
-#include<fstream>
-using namespace std;
-class Account
-{
-private:
-	char Name[100];			//Account Holder Name
-	string Account_Num;		//Account Number
-	long double Balance;	//Total Balance in the account
-	bool isActive;			//True if the account is active else false
-	int Minimum_Balance;	//Minimum balance that must be maintained
-	char Account_Type;		//'S' for saving and 'C' for current 
-	char PIN[5];
-public:
-	Account();//Default Constructor
-	Account(char[], string, long double, bool, int, char);//Parametrized Constructor
-	void Account_Creation();
-	void set_PIN();
-	void set_accountNo();
-	void set_balance(long double a);
-	void update_balance(long double a);
-	void setisActive();
-	void set_MinBalance();
-	void set_accountType();
-	void get() const;
-	string get_AccountNo() const;
-	char* get_Account_Holder_Name();
-	long double get_balance() const;
-	int get_minBalance();
-	bool is_current_or_saving_accountType() const;
-	void Deposit();
-	char* getPIN();
-	void Withdraw();
-	bool is_Active() const;
-	bool Suffient_Balance(long double Amount) const;
-	~Account();//Destructor
-	void saving_dedution(long double balance);
-	void read_and_store_accounts(Account AccountArray[], int& AccountCounter);
-}; //End of class
-Account::Account() :Name(""), Balance(0), isActive(0), Minimum_Balance(1000), Account_Type('S'), PIN("0000") {}
-Account::Account(char Name[], string Account_Num, long double Balance, bool isActive, int Minimum_Balance, char accountType1)//Parametrized Constructor
-{
-	strcpy_s(this->Name, Name);
-	this->Account_Num = Account_Num; this->Balance = Balance;
-	this->isActive = isActive;		this->Minimum_Balance = Minimum_Balance;
-	this->Account_Type = accountType1;	strcpy_s(PIN, "0000");
-}
-void Account::Account_Creation() {
-	srand(time(0));
-	cout << "Account Creation" << endl
-		<< "Note Minimum Balance limit: Current Account: Rs.5000/- \t Saving Account: Rs.1000/-";
-	cout << "\nSelect Account Type" << endl;
-	cout << "\'C\'. Current Account \n\'S\'. Saving Account" << endl;
-	Account_Type = _getch();
-	while (!(Account_Type == 's' || Account_Type == 'S' || Account_Type == 'C' || Account_Type == 'c'))
-		Account_Type = _getch();
-	if (is_current_or_saving_accountType())
-		Minimum_Balance = 5000;
-	else
-		Minimum_Balance = 1000;
-	cout << "AccountNo Assigned:";
-	for (int i = 0; i < 10; i++)
-	{
-		int randomNum; char random;
-		randomNum = rand() % 101;
-		if (randomNum >= 50)
-		{
-			random = ((char)65 + rand() % 26);
-			Account_Num = Account_Num + random;
-			//Account_Num = Account_Num + ((char)65 + rand() % 26);
-		}
-		else {
-			random = 48 + rand() % 10;
-			Account_Num = Account_Num + random;
-		}
-	}
-	cout << Account_Num;
-	cout << "\nEnter Account Holder Name:";
-	cin >> Name;
-	cout << "Enter the Amount You Want To Add in account:";
-	cin >> Balance;
-	saving_dedution(Balance);
-	set_PIN();
-	cout << "PIN Assigned:" << PIN << endl;
-}
-void Account::set_PIN() {
-	for (int i = 0; i < 4; i++)
-		PIN[i] = 48 + rand() % 10;
-	PIN[4] = '\0';
-}
-void Account::set_accountNo() {
-	cout << "AccountNo:";
-	cin >> Account_Num;
-}
-void Account::set_balance(long double a) {
-	Balance = a;
-}
-void Account::update_balance(long double a) {
-	Balance = Balance + a;
-}
-void Account::setisActive() {
-	cout << "\nisActive:";
-	isActive = _getch();
-}
-void Account::set_MinBalance() {
-	cout << "\nMinimum Balance:";
-	Minimum_Balance = _getch();
-}
-void Account::set_accountType() {
-	cout << "\nAccountType:";
-	Account_Type = _getch();
-}
-void Account::get() const
-{
-	cout << "\nACCOUNT DETAILS" << endl
-		<< "AccountNo:" << Account_Num << endl
-		<< "Account Holder Name:" << Name << endl
-		<< "Balance:Rs." << Balance << "/-" << endl;
-	if (is_Active())
-		cout << "Account Status:Active" << endl;
-	else
-		cout << "Account Status:Dormant" << endl << "Please go to Account Management to active your account" << endl;
-	cout << "Minimum Balance:Rs." << Minimum_Balance << "/-" << endl;
-	if (is_current_or_saving_accountType())
-		cout << "Account Type:Current Account" << endl;
-	else
-		cout << "Account Type:Saving Account" << endl;
-}
-string Account::get_AccountNo() const {
-	return Account_Num;
-}
-char* Account::get_Account_Holder_Name() {
-	return Name;
-}
-long double Account::get_balance()  const {
-	return Balance;
-}
-int Account::get_minBalance() {
-	if (Account_Type == 'C' || Account_Type == 'c')
-		Minimum_Balance = 5000;
-	else if (Account_Type == 'S' || Account_Type == 's')
-		Minimum_Balance = 1000;
-	return Minimum_Balance;
-}
-bool Account::is_current_or_saving_accountType()  const {
-	if (Account_Type == 'C' || Account_Type == 'c')
-		return 1;
-	else if (Account_Type == 'S' || Account_Type == 's')
-		return 0;
-}
-void Account::Deposit() {
-	long double Deposit_Amount = 0, SUM = 0;
-	if (Balance >= Minimum_Balance)
-	{
-		cout << "Enter Amount to Deposit:";
-		cin >> Deposit_Amount;
-		SUM = Deposit_Amount + get_balance();
-		set_balance(SUM);
-		cout << "Transaction Successful !!" << endl;
-	}
-	else
-		cout << "Transaction Failed !!" << endl << "Account is Dormant" << endl;
-}
-char* Account::getPIN()
-{
-	return PIN;
-}
-void Account::Withdraw()
-{
-	int Withdraw_Amount;
-	if (Balance >= Minimum_Balance)
-	{
-		cout << "Enter the Amount to Withdraw:";
-		cin >> Withdraw_Amount;
-		if (Balance >= Withdraw_Amount)
-		{
-			Balance = Balance - Withdraw_Amount;
-			cout << "Transaction Sucessful" << endl;
-		}
-		else
-			cout << "Transaction failed!!" << endl << "Insuffient Balance" << endl;
-	}
-	else
-		cout << "Transaction failed!!" << endl << "Account is Dormant" << endl;
-}
-bool Account::is_Active() const
-{
-	if (Balance >= Minimum_Balance)
-		return true;
-	else
-		return false;
-}
-bool Account::Suffient_Balance(long double Amount)  const
-{
-	if (Balance >= Amount)
-		return 1;
-	else
-		return 0;
-}
-void Account::saving_dedution(long double balance) {
-	if (!is_current_or_saving_accountType())
-	{
-		Balance = (Balance - (balance * float(float(2.5) / 100)));
-		cout << "2.5% of the amount has been deducted\nNew Balance is:" << Balance << endl;
-	}
-}
-void Account::read_and_store_accounts(Account AccountArray[], int& AccountCounter)
-{
-	string FileCheck, AccountStatus, AccountType;
+#include"List.h"
 
-	ifstream AccoutFile("AccountsSeverDataBase.txt");
-	if (!AccoutFile)
-	{
-		cout << "Sever File Missing" << endl;
-		return;
-	}
-	AccoutFile >> FileCheck;
-	if (!(FileCheck == "SeverFile"))
-	{
-		cout << "Incorrect or Corrupt Sever File\n";
-		return;
-	}
-	while (!AccoutFile.eof())
-	{
-		AccountCounter++;
-		cout << "Reading Accountnumber" << AccountCounter << endl;
-		AccoutFile >> (AccountArray[AccountCounter].Account_Num);
-		cout << "Read" << endl;
-		AccoutFile >> (AccountArray[AccountCounter].Name);
-		AccoutFile >> (AccountArray[AccountCounter].Balance);
-		AccoutFile >> AccountStatus;
-		if (AccountStatus == "Active")
-			AccountArray[AccountCounter].isActive = 1;
-		else
-			AccountArray[AccountCounter].isActive = 0;
-		AccoutFile >> (AccountArray[AccountCounter].Minimum_Balance)
-			>> AccountType;
-		if (AccountType == "Saving")
-			AccountArray[AccountCounter].Account_Type = 'S';
-		else
-			AccountArray[AccountCounter].isActive = 'C';
-		AccoutFile >> (AccountArray[AccountCounter].PIN);
-	}
-	cout << "Data has been successfully Imported\n";
-	AccoutFile.close();
-}
-Account::~Account() //Destructor
-{
-	isActive = 0; Balance = 0;
-}
-class Node
-{
-public:
-	Account* Data;
-	Node* next;
-	Node();
-};
-Node::Node() : Data(0), next(0) {}
-class Accountslist
-{
-public:
-	Node* head, * tail;
-	Accountslist();
-};
-Accountslist::Accountslist() :head(0), tail(0) {}
 bool transfer(Account& source, Account& destination, long double amount)
 {
 	if (source.is_Active())
@@ -282,14 +15,6 @@ bool transfer(Account& source, Account& destination, long double amount)
 	}
 	else
 		cout << "Inactive account" << endl; return 0;
-}
-void validate_Input(int start, int& input, int end) {
-	while (input < start || input > end)
-		input = _getch() - '0';
-}
-void validate_Input(int& input, int numberofaccount, Account account[]) {
-	while ((input > numberofaccount || input <= 0) || (account[input].get_AccountNo() == ""))
-		input = _getch();
 }
 void ExportAsReadable(Account A[], int num_of_Accounts) {
 	ofstream Accoufile;
@@ -334,6 +59,198 @@ void ExportAsBackup(Account A[], int num_of_Accounts) {
 	}
 	cout << "Data has been successfully exported\n";
 }
-int main() {
+void validate_Input(int start, int& input, int end) {
+	while (input < start || input > end)
+		input = _getch() - '0';
+}
+void validate_Input(int& input, int numberofaccount, Account account[]) {
+	while ((input > numberofaccount || input <= 0) || (account[input].get_AccountNo() == ""))
+		input = _getch();
+}
 
+list Account_List;
+Account A[50]; //Global (class)Account Object array.
+int UI_Input = 0, loop = 1, Input[2];
+char PIN[5];
+void Bank_Main_Menu() {
+	cout << "Welcome to Bank Account Management System" << endl;
+	cout << "0. Manage Account DataBase" << "\t1. Create a Account" << endl;
+	UI_Input = _getch() - '0';
+}
+int main()
+{
+	int static No_of_AccountsCounter = 0;
+	long double Amount;
+	char sure;
+	Bank_Main_Menu();
+	validate_Input(0, UI_Input, 1);//Input validation
+	if (UI_Input == 0)
+		validate_Input(0, UI_Input, 1);//Input validation
+	while (UI_Input == 0 || UI_Input == 1 || UI_Input == 2 || UI_Input == 3 || UI_Input == 4 || UI_Input == 5)//Input 6 terminates this loop.
+	{
+		switch (UI_Input)
+		{
+		case 0://Database
+		{
+			system("CLS");
+			cout << "0. Import\t1. Export As Readable\t2. Export As Backup\n";
+			Input[0] = _getch() - '0';
+			if (Input[0] == 0)
+				A[0].read_and_store_accounts(A, No_of_AccountsCounter);
+			else if (Input[0] == 1)
+				ExportAsReadable(A, No_of_AccountsCounter);
+			else if (Input[0] == 2)
+				ExportAsBackup(A, No_of_AccountsCounter);
+			break;
+		}
+		case 1: //Create Account
+		{
+			system("CLS");
+			No_of_AccountsCounter++;
+			cout << "# of As:" << No_of_AccountsCounter << endl;
+			A[No_of_AccountsCounter].Account_Creation();
+			break;
+		}//end of Case 1
+		case 2: //Manage Accounts
+		{
+			system("CLS");
+			cout << "Select Account To Manage" << endl;
+			cout << "Account exsiting:" << No_of_AccountsCounter << endl;
+			for (loop = 1; loop <= No_of_AccountsCounter; loop++)
+				cout << loop << "\. " << A[loop].get_Account_Holder_Name() << endl;
+			cout << "0. for Main Menu\n";
+			Input[1] = _getch() - '0';
+			validate_Input(0, Input[1], No_of_AccountsCounter); //Input validation
+			if (Input[1] == 0)
+				break;
+			A[Input[1]].get();
+			if (!(A[Input[1]].is_Active()))
+			{
+				cout << "0. Back Menu" << "\t1. Activate Account" << endl;
+				Input[0] = _getch() - '0';
+				validate_Input(0, Input[0], 1); //Input validation
+				if (Input[0] == 1)
+				{
+					cout << "Desposit Amount to Activate Account:";
+					cin >> Amount;
+					A[Input[1]].update_balance(Amount);
+				}
+			}
+			else
+			{
+				cout << "0. Back To Menu" << " \t1. Reset PIN" << "\t2. Close Account" << endl;
+				Input[0] = _getch() - '0';
+				validate_Input(0, Input[0], 2); //Input validation
+				if (Input[0] == 1)//Reset PIN
+				{
+					A[Input[1]].set_PIN();
+					cout << "New PIN is:" << A[Input[1]].getPIN() << endl;	//To remove
+				}
+				if (Input[0] == 2) //Close Account
+				{
+					cout << "Are you sure you want to close your account?: Y. proceed\\N. stop:";
+					sure = _getch();
+					if (sure == 'Y' || sure == 'y') //Confirmation. close Account
+					{
+						A[Input[1]].~Account(); //To Delete an account.
+						for (loop = Input[1]; loop < No_of_AccountsCounter; loop++)
+						{
+							cout << "\t loop is:" << loop << endl;
+							A[loop] = A[loop + 1];
+							cout << "A[loop] = A[loop + 1]\n";
+							A[loop + 1].~Account(); //To Delete an account.
+						}
+						No_of_AccountsCounter--;
+					}
+				}
+			}
+			break;
+		}//end of Case 2
+		case 3: //Deposit Money
+		{
+			system("CLS");
+			cout << "Select Account To Deposit Money Into" << endl;
+			for (loop = 1; loop <= No_of_AccountsCounter; loop++)
+				cout << loop << ". " << A[loop].get_Account_Holder_Name() << endl;
+			cout << "0. Cancel";
+			Input[1] = _getch() - '0';
+			validate_Input(0, Input[1], No_of_AccountsCounter);
+			if (Input[1] == 0)
+				break;
+			A[Input[1]].Deposit();
+			break;
+		}//end of Case 3
+		case 4: //Withdraw Money
+		{
+			system("CLS");
+			cout << "Select Account To Withdraw Money From" << endl;
+			for (loop = 1; loop <= No_of_AccountsCounter; loop++)
+				cout << loop << ". " << A[loop].get_Account_Holder_Name() << endl;
+			Input[1] = _getch() - '0';
+			validate_Input(1, Input[1], No_of_AccountsCounter); //Input validation
+			A[Input[1]].Withdraw();
+			break;
+		}
+		case 5: //Transfer Money
+		{
+			system("CLS");
+			cout << "Select Account To Transfer Funds FROM:" << endl;
+			for (loop = 1; loop <= No_of_AccountsCounter; loop++)
+				cout << "\'" << loop << "\'. " << A[loop].get_Account_Holder_Name() << endl;
+			Input[0] = _getch() - '0';
+			validate_Input(1, Input[0], No_of_AccountsCounter); //Input validation
+			cout << "Enter the 4-digit PIN. perform Transaction:" << A[Input[0]].getPIN();
+			for (loop = 0; loop < 4; loop++)
+			{
+				PIN[loop] = _getch();	//User Entering PIN
+				while (PIN[loop] < 48 || PIN[loop] > 57) {
+					if (PIN[loop] == 8)//Allow user to retype/backspace pin
+					{
+						if (loop >= 0) {
+							cout << "\b \b";
+							if (loop != 0)
+								loop--;
+						}
+					}
+					PIN[loop] = _getch();
+				}
+				cout << "*";
+			}PIN[4] = '\0';
+			if (!(strcmp(A[Input[0]].getPIN(), PIN))) //PIN Matching
+			{
+				cout << "\nSelect Account To Transfer Amount TO:";
+				Input[1] = _getch() - '0';	validate_Input(1, Input[1], No_of_AccountsCounter);//Input validation
+				cout << "Enter Amount To Transfer:";
+				cin >> Amount;
+				if (transfer(A[Input[0]], A[Input[1]], Amount)) //transfer() function returns bool(1/0).
+					cout << "Transaction is Sucessful" << endl;
+				else
+					cout << "Transaction is unSuccessful" << endl;
+			}
+			else
+				cout << "\nInvalid PIN";
+			break;
+		}
+		}//End of switch Statement.
+		cout << "\n0. Manage Account DataBase" << "\t1. Create Account\t";
+		if (No_of_AccountsCounter >= 1)
+		{
+			cout << "2. Manage Accounts" << "\n3. Deposit Money\t"
+				<< "\t4. Withdraw Money\t";
+			if (No_of_AccountsCounter >= 2)
+				cout << "5. Transfer Funds\n";
+
+			cout << "6. Exit Program" << endl;
+		}
+		UI_Input = _getch() - '0';
+		if (No_of_AccountsCounter == 0)
+			validate_Input(0, UI_Input, 1);//Import and creation allowed only
+		else if (No_of_AccountsCounter >= 1)
+			if (No_of_AccountsCounter < 2)
+				while (UI_Input < 0 || UI_Input == 5 || UI_Input > 6) //Can't Transfer
+					UI_Input = _getch() - '0';
+			else
+				validate_Input(0, UI_Input, 6);//Input validation for all options
+
+	}//End of While Loop controlling switch Statement.
 }
