@@ -7,4 +7,5 @@ public:
 	Node* next;
 	Node();
 	Node(Account NewAccount);
+	
 };

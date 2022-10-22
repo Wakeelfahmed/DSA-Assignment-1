@@ -181,4 +181,6 @@ void Account::read_and_store_accounts(Account AccountArray[], int& AccountCounte
 	cout << "Data has been successfully Imported\n";
 	AccoutFile.close();
 }
-Account::~Account() { isActive = 0; Balance = 0; } // Destructor
+Account::~Account() {
+	isActive = 0; Balance = 0; Account_Num = "";
+} // Destructor

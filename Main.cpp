@@ -62,14 +62,17 @@ void ExportAsBackup(Account A[], int num_of_Accounts) {
 void validate_Input(int start, int& input, int end) {
 	while (input < start || input > end)
 		input = _getch() - '0';
+	cout << "le";
 }
 void validate_Input(int& input, int numberofaccount, Account account[]) {
 	while ((input > numberofaccount || input <= 0) || (account[input].get_AccountNo() == ""))
 		input = _getch();
 }
-
+void Display_HeadTail(list list) {
+	cout << "Head:" << list.get_head()->Account_Data.get_Account_Holder_Name() << "\t\tTail:" << list.get_tail()->Account_Data.get_Account_Holder_Name();
+}
 list Account_List;
-Account A[50]; //Global (class)Account Object array.
+Account A; //Global (class)Account Object array.
 int UI_Input = 0, loop = 1, Input[2];
 char PIN[5];
 void Bank_Main_Menu() {
@@ -92,39 +95,46 @@ int main()
 		{
 		case 0://Database
 		{
-			system("CLS");
+			/*system("CLS");
 			cout << "0. Import\t1. Export As Readable\t2. Export As Backup\n";
 			Input[0] = _getch() - '0';
 			if (Input[0] == 0)
 				A[0].read_and_store_accounts(A, No_of_AccountsCounter);
 			else if (Input[0] == 1)
-				ExportAsReadable(A, No_of_AccountsCounter);
+				//ExportAsReadable(A, No_of_AccountsCounter);
 			else if (Input[0] == 2)
 				ExportAsBackup(A, No_of_AccountsCounter);
-			break;
+			break;*/
 		}
 		case 1: //Create Account
 		{
 			system("CLS");
 			No_of_AccountsCounter++;
-			cout << "# of As:" << No_of_AccountsCounter << endl;
-			A[No_of_AccountsCounter].Account_Creation();
+			cout << "# of Accounts:" << No_of_AccountsCounter << endl;
+			A.Account_Creation();
+			Account_List.insert_end(A);
+			Display_HeadTail(Account_List);
+			A.~Account();
 			break;
 		}//end of Case 1
 		case 2: //Manage Accounts
-		{
+		{	Node* Account;
 			system("CLS");
 			cout << "Select Account To Manage" << endl;
 			cout << "Account exsiting:" << No_of_AccountsCounter << endl;
-			for (loop = 1; loop <= No_of_AccountsCounter; loop++)
-				cout << loop << "\. " << A[loop].get_Account_Holder_Name() << endl;
+			//for (loop = 1; loop <= No_of_AccountsCounter; loop++)	//cout << loop << "\. " << A[loop].get_Account_Holder_Name() << endl;
+			Account_List.Display_list();
 			cout << "0. for Main Menu\n";
 			Input[1] = _getch() - '0';
 			validate_Input(0, Input[1], No_of_AccountsCounter); //Input validation
 			if (Input[1] == 0)
 				break;
-			A[Input[1]].get();
-			if (!(A[Input[1]].is_Active()))
+			cout << "dis";
+			Account_List.Display_Node(Input[1]);
+			cout << "hre";
+			/*
+			//A.get();
+			if (!(Account_List..is_Active()))
 			{
 				cout << "0. Back Menu" << "\t1. Activate Account" << endl;
 				Input[0] = _getch() - '0';
@@ -163,10 +173,10 @@ int main()
 						No_of_AccountsCounter--;
 					}
 				}
-			}
+			}*/
 			break;
 		}//end of Case 2
-		case 3: //Deposit Money
+		/*case 3: //Deposit Money
 		{
 			system("CLS");
 			cout << "Select Account To Deposit Money Into" << endl;
@@ -230,7 +240,7 @@ int main()
 			else
 				cout << "\nInvalid PIN";
 			break;
-		}
+		}*/
 		}//End of switch Statement.
 		cout << "\n0. Manage Account DataBase" << "\t1. Create Account\t";
 		if (No_of_AccountsCounter >= 1)

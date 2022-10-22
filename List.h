@@ -17,4 +17,7 @@ public:
 	bool isEmpty() const;
 	int Number_of_Nodes() const;
 	void delete_Student(Account Value_to_delete);
+	//Account get_Accounts_Details(int Node_Position) {	}
+	void Display_Node(int i) const;
+	Node* get_Account_Node(int i) const { }
 };
