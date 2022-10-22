@@ -62,7 +62,6 @@ void ExportAsBackup(Account A[], int num_of_Accounts) {
 void validate_Input(int start, int& input, int end) {
 	while (input < start || input > end)
 		input = _getch() - '0';
-	cout << "le";
 }
 void validate_Input(int& input, int numberofaccount, Account account[]) {
 	while ((input > numberofaccount || input <= 0) || (account[input].get_AccountNo() == ""))
@@ -129,12 +128,8 @@ int main()
 			validate_Input(0, Input[1], No_of_AccountsCounter); //Input validation
 			if (Input[1] == 0)
 				break;
-			cout << "dis";
 			Account_List.Display_Node(Input[1]);
-			cout << "hre";
-			/*
-			//A.get();
-			if (!(Account_List..is_Active()))
+			if (!(Account_List.get_Account_Node(Input[1])->Account_Data.is_Active()))
 			{
 				cout << "0. Back Menu" << "\t1. Activate Account" << endl;
 				Input[0] = _getch() - '0';
@@ -143,7 +138,7 @@ int main()
 				{
 					cout << "Desposit Amount to Activate Account:";
 					cin >> Amount;
-					A[Input[1]].update_balance(Amount);
+					Account_List.get_Account_Node(Input[1])->Account_Data.update_balance(Amount);
 				}
 			}
 			else
@@ -153,8 +148,8 @@ int main()
 				validate_Input(0, Input[0], 2); //Input validation
 				if (Input[0] == 1)//Reset PIN
 				{
-					A[Input[1]].set_PIN();
-					cout << "New PIN is:" << A[Input[1]].getPIN() << endl;	//To remove
+					Account_List.get_Account_Node(Input[1])->Account_Data.set_PIN();
+					cout << "New PIN is:" << Account_List.get_Account_Node( Input[1])->Account_Data.getPIN() << endl;	//To remove
 				}
 				if (Input[0] == 2) //Close Account
 				{
@@ -162,18 +157,20 @@ int main()
 					sure = _getch();
 					if (sure == 'Y' || sure == 'y') //Confirmation. close Account
 					{
-						A[Input[1]].~Account(); //To Delete an account.
-						for (loop = Input[1]; loop < No_of_AccountsCounter; loop++)
+						Account_List.get_Account_Node(Input[1])->Account_Data.~Account(); //To Delete an account.
+						Account_List.delete_Account_Node_fr_list(Input[1]);//To Delete Node from list.
+
+						/*for (loop = Input[1]; loop < No_of_AccountsCounter; loop++)
 						{
 							cout << "\t loop is:" << loop << endl;
 							A[loop] = A[loop + 1];
 							cout << "A[loop] = A[loop + 1]\n";
 							A[loop + 1].~Account(); //To Delete an account.
-						}
+						}*/
 						No_of_AccountsCounter--;
 					}
 				}
-			}*/
+			}
 			break;
 		}//end of Case 2
 		/*case 3: //Deposit Money

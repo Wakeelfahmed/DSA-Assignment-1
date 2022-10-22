@@ -29,7 +29,7 @@ void list::Display_list() const {
 	int count = 1;
 	while (loop != NULL)
 	{
-		cout << count << "." << loop->Account_Data.get_Account_Holder_Name() << endl;
+		cout << count << ". " << loop->Account_Data.get_Account_Holder_Name() << endl;
 		loop = loop->next;
 		count++;
 	}
@@ -43,7 +43,37 @@ int list::Number_of_Nodes() const {
 	}
 	return NumberofNodes;
 }
-void list::delete_Student(Account Value_to_delete) {}
+void list::delete_Account_Node_fr_list(Account Value_to_delete) {
+	if (isEmpty()) {
+		cout << "List is Empty\n"; return;
+	}
+	else if (!Search_in_List(Value_to_delete, *this)) {
+		cout << "Not found in list\n"; return;
+	}
+	Node* p = head;
+	Node* Temp;
+	if (Value_to_delete == head->Data) {
+		Temp = p;
+		head = p->next;
+		delete Temp;
+		return;
+	}
+	while (p != NULL)
+	{
+		if (p->next->Data == Value_to_delete)
+		{
+			cout << "abr\n";
+			Temp = p->next;
+			p->next = p->next->next;
+			delete Temp;
+			if ((p->next == NULL))
+				tail = p;
+			return;
+		}
+		p = p->next;
+	}
+}
+
 void list::Display_Node(int i) const {
 	Node* loop = head;
 	int count = 1;
@@ -56,3 +86,16 @@ void list::Display_Node(int i) const {
 		loop = loop->next;
 	}
 }
+Node* list::get_Account_Node(int i) const {
+	Node* loop = head;
+	int count = 1;
+	while (loop != NULL)
+	{
+		if (count == i) {
+			return loop;
+		}
+		count++;
+		loop = loop->next;
+	}
+}
+

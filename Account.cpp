@@ -182,5 +182,5 @@ void Account::read_and_store_accounts(Account AccountArray[], int& AccountCounte
 	AccoutFile.close();
 }
 Account::~Account() {
-	isActive = 0; Balance = 0; Account_Num = "";
+	isActive = 0; Balance = 0; Account_Num = ""; strcpy_s(Name , "");
 } // Destructor
