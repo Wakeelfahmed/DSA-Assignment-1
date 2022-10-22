@@ -43,16 +43,33 @@ int list::Number_of_Nodes() const {
 	}
 	return NumberofNodes;
 }
-void list::delete_Account_Node_fr_list(Account Value_to_delete) {
+int Search_in_List(Account Account_to_search, list list) {
+	Node* p = list.get_head();
+	int count = 1;
+	while (p != NULL)
+	{
+		cout << "Accountsearch::"; Account_to_search.get();
+		cout << endl << endl; cout << "loop Account::";		p->Account_Data.get();
+		if (Account_to_search == p->Account_Data)
+		{
+			cout << "FOUND AT " << count << endl;
+			return count;
+		}
+		p = p->next;
+		count++;
+	}
+	return 0;
+}
+void list::delete_Account_Node_fr_list(Account Account_to_delete) {
 	if (isEmpty()) {
 		cout << "List is Empty\n"; return;
 	}
-	else if (!Search_in_List(Value_to_delete, *this)) {
+	else if (!Search_in_List(Account_to_delete, *this)) {
 		cout << "Not found in list\n"; return;
 	}
 	Node* p = head;
 	Node* Temp;
-	if (Value_to_delete == head->Data) {
+	if (Account_to_delete == head->Account_Data) {
 		Temp = p;
 		head = p->next;
 		delete Temp;
@@ -60,7 +77,7 @@ void list::delete_Account_Node_fr_list(Account Value_to_delete) {
 	}
 	while (p != NULL)
 	{
-		if (p->next->Data == Value_to_delete)
+		if (p->next->Account_Data == Account_to_delete)
 		{
 			cout << "abr\n";
 			Temp = p->next;

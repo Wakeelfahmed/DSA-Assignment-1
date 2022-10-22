@@ -157,8 +157,9 @@ int main()
 					sure = _getch();
 					if (sure == 'Y' || sure == 'y') //Confirmation. close Account
 					{
-						Account_List.get_Account_Node(Input[1])->Account_Data.~Account(); //To Delete an account.
-						Account_List.delete_Account_Node_fr_list(Input[1]);//To Delete Node from list.
+						//Account_List.get_Account_Node(Input[1])->Account_Data.~Account(); //To Delete an account.
+						//Account_List.get_Account_Node(Input[1]);
+						Account_List.delete_Account_Node_fr_list(Account_List.get_Account_Node(Input[1])->Account_Data);//To Delete Node from list.
 
 						/*for (loop = Input[1]; loop < No_of_AccountsCounter; loop++)
 						{

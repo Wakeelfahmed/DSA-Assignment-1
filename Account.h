@@ -42,4 +42,6 @@ public:
 	~Account();//Destructor
 	void saving_dedution(long double balance);
 	void read_and_store_accounts(Account AccountArray[], int& AccountCounter);
+	bool operator==(Account Student_2) const;
 }; //End of class
+
