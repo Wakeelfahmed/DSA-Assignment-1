@@ -14,8 +14,37 @@ void list::insert_beg(Account Account) {
 		New_Node->next = head;
 	head = New_Node;
 }
-void list::insert_specfic_Position(int place, Account student) {}
-void list::insert_after(Account old, Account student) {}
+void list::insert_specfic_Position(int place, Account Account) {}
+void list::insert_after(Account PreviousAcc, Account NewAcc) {
+	if (isEmpty())
+	{
+		cout << "List is empty";
+		return;
+	}
+	Node* p = head;
+	int position_count = 1;
+	while (p != NULL)
+	{
+		if (p->Account_Data == PreviousAcc)
+		{
+			Node* NewNode = new Node(NewAcc);
+			if (position_count == Number_of_Nodes()) {
+				p->next = NewNode;
+				tail = NewNode;
+				//insert_end(newvalue);
+			}
+			else
+			{
+				NewNode->next = p->next;
+				p->next = NewNode;
+				//insert_specfic_Position(position_count, newvalue);
+			}
+			return;
+		}
+		p = p->next;
+		position_count++;
+	}
+}
 void list::insert_end(Account Account) {
 	Node* New_Node = new Node(Account);
 	New_Node->Account_Data = Account;
@@ -49,13 +78,8 @@ int Search_in_List(Account Account_to_search, list list) {
 	int count = 1;
 	while (p != NULL)
 	{
-		cout << "Accountsearch::"; Account_to_search.get();
-		cout << endl << endl; cout << "loop Account::";		p->Account_Data.get();
 		if (Account_to_search == p->Account_Data)
-		{
-			cout << "FOUND AT " << count << endl;
 			return count;
-		}
 		p = p->next;
 		count++;
 	}
@@ -80,9 +104,9 @@ void list::delete_Account_Node_fr_list(Account Account_to_delete) {
 	{
 		if (p->next->Account_Data == Account_to_delete)
 		{
-			cout << "abr\n";
 			Temp = p->next;
 			p->next = p->next->next;
+			Temp->Account_Data.~Account();
 			delete Temp;
 			if ((p->next == NULL))
 				tail = p;
