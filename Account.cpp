@@ -1,5 +1,5 @@
 #include "Account.h"
-Account::Account() :Name(""), Balance(0), isActive(0), Minimum_Balance(1000), Account_Type('S'), PIN("0000") {}
+Account::Account() :Name(""), Balance(0), isActive(0), Minimum_Balance(0), Account_Type('S'), PIN("0000") {}
 Account::Account(char Name[], string Account_Num, long double Balance, bool isActive, int Minimum_Balance, char accountType1)//Parametrized Constructor
 {
 	strcpy_s(this->Name, Name);
@@ -50,12 +50,13 @@ void Account::set_PIN() {
 		PIN[i] = 48 + rand() % 10;
 	PIN[4] = '\0';
 }
-void Account::set_accountNo() { cout << "AccountNo:";	cin >> Account_Num; }
+void Account::set_Name(char* NewName) { strcpy_s(Name, NewName); }
+void Account::set_accountNo(string AccountNum) { this->Account_Num = AccountNum; }
 void Account::set_balance(long double a) { Balance = a; }
 void Account::update_balance(long double a) { Balance = Balance + a; }
-void Account::setisActive() { cout << "\nisActive:";	isActive = _getch(); }
-void Account::set_MinBalance() { cout << "\nMinimum Balance:";	Minimum_Balance = _getch(); }
-void Account::set_accountType() { cout << "\nAccountType:";	Account_Type = _getch(); }
+void Account::setisActive(bool truefalse) { isActive = truefalse; }
+void Account::set_MinBalance(int Minimum_Balance) { this->Minimum_Balance = Minimum_Balance; }
+void Account::set_accountType(char ch) { Account_Type = ch; }
 void Account::get() const
 {
 	cout << "\nACCOUNT DETAILS" << endl
@@ -140,46 +141,6 @@ void Account::saving_dedution(long double balance) {
 		Balance = (Balance - (balance * float(float(2.5) / 100)));
 		cout << "2.5% of the amount has been deducted\nNew Balance is:" << Balance << endl;
 	}
-}
-void Account::read_and_store_accounts(Account AccountArray[], int& AccountCounter)
-{
-	string FileCheck, AccountStatus, AccountType;
-
-	ifstream AccoutFile("AccountsSeverDataBase.txt");
-	if (!AccoutFile)
-	{
-		cout << "Sever File Missing" << endl;
-		return;
-	}
-	AccoutFile >> FileCheck;
-	if (!(FileCheck == "SeverFile"))
-	{
-		cout << "Incorrect or Corrupt Sever File\n";
-		return;
-	}
-	while (!AccoutFile.eof())
-	{
-		AccountCounter++;
-		cout << "Reading Accountnumber" << AccountCounter << endl;
-		AccoutFile >> (AccountArray[AccountCounter].Account_Num);
-		cout << "Read" << endl;
-		AccoutFile >> (AccountArray[AccountCounter].Name);
-		AccoutFile >> (AccountArray[AccountCounter].Balance);
-		AccoutFile >> AccountStatus;
-		if (AccountStatus == "Active")
-			AccountArray[AccountCounter].isActive = 1;
-		else
-			AccountArray[AccountCounter].isActive = 0;
-		AccoutFile >> (AccountArray[AccountCounter].Minimum_Balance)
-			>> AccountType;
-		if (AccountType == "Saving")
-			AccountArray[AccountCounter].Account_Type = 'S';
-		else
-			AccountArray[AccountCounter].Account_Type = 'C';
-		AccoutFile >> (AccountArray[AccountCounter].PIN);
-	}
-	cout << "Data has been successfully Imported\n";
-	AccoutFile.close();
 }
 Account::~Account() {
 	isActive = 0; Balance = 0; Account_Num = ""; strcpy_s(Name, "");

@@ -6,6 +6,7 @@
 #include<conio.h>
 #include<string.h>
 #include<fstream>
+//#include"List.h"
 using namespace std;
 class Account
 {
@@ -22,12 +23,13 @@ public:
 	Account(char[], string, long double, bool, int, char);//Parametrized Constructor
 	void Account_Creation();
 	void set_PIN();
-	void set_accountNo();
+	void set_Name(char *);
+	void set_accountNo(string AccountNum);
 	void set_balance(long double a);
 	void update_balance(long double a);
-	void setisActive();
-	void set_MinBalance();
-	void set_accountType();
+	void setisActive(bool truefalse);
+	void set_MinBalance(int Minimum_Balance);
+	void set_accountType(char);
 	void get() const;
 	string get_AccountNo() const;
 	char* get_Account_Holder_Name();
@@ -41,7 +43,7 @@ public:
 	bool Suffient_Balance(long double Amount) const;
 	~Account();//Destructor
 	void saving_dedution(long double balance);
-	void read_and_store_accounts(Account AccountArray[], int& AccountCounter);
+	//void read_and_store_accounts(list AccountArray, int& AccountCounter);
 	bool operator==(Account Student_2) const;
 }; //End of class
 
