@@ -1,11 +1,18 @@
 #include "Account.h"
 Account::Account() :Name(""), Balance(0), isActive(0), Minimum_Balance(0), Account_Type('S'), PIN("0000") {}
-Account::Account(char Name[], string Account_Num, long double Balance, bool isActive, int Minimum_Balance, char accountType1)//Parametrized Constructor
+Account::Account(char* Name, string Account_Num, long double Balance, string isActive, int Minimum_Balance, string accountType, char* PIN)//Parametrized Constructor
 {
-	strcpy_s(this->Name, Name);
-	this->Account_Num = Account_Num;	this->Balance = Balance;
-	this->isActive = isActive;			this->Minimum_Balance = Minimum_Balance;
-	this->Account_Type = accountType1;	strcpy_s(PIN, "0000");
+	strcpy_s(this->Name, Name);			this->Account_Num = Account_Num;		this->Balance = Balance;
+	if (isActive == "Active")
+		this->isActive = 1;
+	else
+		this->isActive = 0;
+	if (accountType == "Saving")
+		Account_Type = 'S';
+	else
+		Account_Type = 'C';
+	this->Minimum_Balance = Minimum_Balance;
+	strcpy_s(this->PIN, PIN);
 }
 void Account::Account_Creation() {
 	srand(time(0));

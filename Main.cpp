@@ -76,6 +76,7 @@ void read_and_store_accounts(list& Account_list, int& AccountCounter)
 {
 	string FileCheck, AccountStatus, AccountType, Account_Num;
 	char Name[100];  long double Balance;	int Minimum_Ba;
+	bool isactive;
 	ifstream AccoutFile("AccountsSeverDataBase.txt");
 	if (!AccoutFile)
 	{
@@ -90,25 +91,20 @@ void read_and_store_accounts(list& Account_list, int& AccountCounter)
 	}
 	while (!AccoutFile.eof())
 	{
-		Account Temp;
-		AccountCounter++;
-		cout << "Reading Accountnumber" << AccountCounter << endl;
-		cout << "Read" << endl;
-		AccoutFile >> Account_Num >> Name >> Balance >> AccountStatus;
-		cout << "NAME READ:" << Name << endl;
-		Temp.set_Name(Name);
-		Temp.set_accountNo(Account_Num); Temp.set_balance(Balance);
-		if (AccountStatus == "Active")
+		AccountCounter++; cout << "Reading Account #:" << AccountCounter; cout << "\nRead\n";
+		AccoutFile >> Account_Num >> Name >> Balance >> AccountStatus >> Minimum_Ba >> AccountType >> PIN;
+
+		Account Temp(Name, Account_Num, Balance, AccountStatus, Minimum_Ba, AccountType, PIN);
+		/*if (AccountStatus == "Active")
 			Temp.setisActive(1);
 		else
-			Temp.setisActive(0);
-		AccoutFile >> Minimum_Ba >> AccountType;
-		Temp.set_MinBalance(Minimum_Ba);
-		if (AccountType == "Saving")
-			Temp.set_accountType('S');  //Temp
+			Temp.setisActive(0);*/
+		/*if (AccountType == "Saving")
+			Temp.set_accountType('S');
 		else
-			Temp.set_accountType('C');  //Temp
-		AccoutFile >> (PIN);	//Temp
+			Temp.set_accountType('C');*/
+		//Temp.set_Name(Name); Temp.set_accountNo(Account_Num); Temp.set_balance(Balance);
+		//Temp.set_MinBalance(Minimum_Ba);
 		Account_list.insert_end(Temp);
 		//Temp.~Account();
 		cout << "# of Nodes:" << Account_list.Number_of_Nodes();
@@ -116,7 +112,6 @@ void read_and_store_accounts(list& Account_list, int& AccountCounter)
 	cout << "Data has been successfully Imported\n";
 	AccoutFile.close();
 }
-
 void Bank_Main_Menu() {
 	cout << "Welcome to Bank Account Management System" << endl;
 	cout << "0. Manage Account DataBase" << "\t1. Create a Account" << endl;

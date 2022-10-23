@@ -20,7 +20,7 @@ private:
 	char PIN[5];
 public:
 	Account();//Default Constructor
-	Account(char[], string, long double, bool, int, char);//Parametrized Constructor
+	Account(char*, string, long double, string, int, string, char*);//Parametrized Constructor
 	void Account_Creation();
 	void set_PIN();
 	void set_Name(char *);

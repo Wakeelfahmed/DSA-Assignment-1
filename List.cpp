@@ -18,6 +18,7 @@ void list::insert_specfic_Position(int place, Account student) {}
 void list::insert_after(Account old, Account student) {}
 void list::insert_end(Account Account) {
 	Node* New_Node = new Node(Account);
+	New_Node->Account_Data = Account;
 	if (isEmpty())
 		head = New_Node;
 	else
@@ -89,8 +90,7 @@ void list::delete_Account_Node_fr_list(Account Account_to_delete) {
 		}
 		p = p->next;
 	}
-}
-
+}\
 void list::Display_Node(int i) const {
 	Node* loop = head;
 	int count = 1;
