@@ -14,7 +14,33 @@ void list::insert_beg(Account Account) {
 		New_Node->next = head;
 	head = New_Node;
 }
-void list::insert_specfic_Position(int place, Account Account) {}
+void list::insert_specfic_Position(int place, Account Account) {
+	int position_count = 1;
+	if (place > Number_of_Nodes()) {
+		cout << "List has less nodes than the place, Node CAN't be inserted!!\n";
+		return;
+	}
+	Node* NewNode = new Node(Account);
+	Node* p = head;
+	while (p != NULL)
+	{
+		if (place == 1) {
+			insert_beg(Account);
+			return;
+		}
+		else if (place == Number_of_Nodes()) {
+			insert_end(Account);
+			return;
+		}
+		else if (position_count == place - 1 && place != 0) {
+			NewNode->next = p->next;
+			p->next = NewNode;
+			return;
+		}
+		p = p->next;		//move to next node
+		position_count++;
+	}
+}
 void list::insert_after(Account PreviousAcc, Account NewAcc) {
 	if (isEmpty())
 	{

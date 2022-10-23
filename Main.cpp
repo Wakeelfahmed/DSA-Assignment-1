@@ -65,9 +65,6 @@ void validate_Input(int& input, int numberofaccount, Account account[]) {
 	while ((input > numberofaccount || input <= 0) || (account[input].get_AccountNo() == ""))
 		input = _getch();
 }
-void Display_HeadTail(list list) {
-	cout << "Head:" << list.get_head()->Account_Data.get_Account_Holder_Name() << "\t\tTail:" << list.get_tail()->Account_Data.get_Account_Holder_Name();
-}
 void FindAccount(list list, string Account_No) {
 	Node* p = list.get_head();
 	while (p != NULL)
@@ -103,7 +100,6 @@ void read_and_store_accounts(list& Account_list)
 		Account* Temp = new Account(Name, Account_Num, Balance, AccountStatus, Minimum_Ba, AccountType, PIN);//Parameterized Cons.
 		Account_list.insert_end(*Temp);
 		Temp->~Account();		delete Temp;	//freeup
-		cout << "# of Nodes:" << Account_list.Number_of_Nodes();
 	}
 	cout << "Data has been successfully Imported\n";
 	AccoutFile.close();
@@ -129,7 +125,7 @@ int main()
 		case 0://Database
 		{
 			system("CLS");
-			cout << "0. Import\t1. Export As Readable\t2. Export As Backup\t3. SortAccounts\n";
+			cout << "0. Import\t1. Export As Readable\t2. Export As Backup\t3. Sort Accounts List\n";
 			Input[0] = _getch() - '0';
 			if (Input[0] == 0)
 				read_and_store_accounts(Account_List);
@@ -140,24 +136,17 @@ int main()
 				cout << "Data has been successfully exported\n";
 			}
 			else if (Input[0] == 3) {
-
 				int i, j; int ans;
-				for (i = 1; i <= Account_List.Number_of_Nodes()+2; i++)
+				for (i = 1; i <= Account_List.Number_of_Nodes(); i++)
 					for (j = 1; j <= Account_List.Number_of_Nodes() - i; j++) {
-						cout << "strcmp: " << Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name() << "   " << Account_List.get_Account_Node(j + i)->Account_Data.get_Account_Holder_Name() << endl;
 						ans = strcmp(Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name(), Account_List.get_Account_Node(j + i)->Account_Data.get_Account_Holder_Name());
-						cout << "ANS:" << ans << endl;
 						if (ans == 1) {
-							//cout << "Inserting:" << Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name() <<endl;
-							//cout << "After" << Account_List.get_Account_Node(j + 1)->Account_Data.get_Account_Holder_Name() << endl;
-							Account_List.insert_after(Account_List.get_Account_Node(j + 1)->Account_Data,Account_List.get_Account_Node(j)->Account_Data);
-							Account_List.delete_Account_Node_fr_list(Account_List.get_Account_Node(j)->Account_Data);
+							Account_List.insert_after(Account_List.get_Account_Node(j + 1)->Account_Data, Account_List.get_Account_Node(j)->Account_Data);
+							if (i != Account_List.Number_of_Nodes())
+								Account_List.delete_Account_Node_fr_list(Account_List.get_Account_Node(j)->Account_Data);
 						}
-						//if (Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name() > Account_List.get_Account_Node(j + i)->Account_Data.get_Account_Holder_Name())
-						cout << "up\n"; Account_List.Display_list();
 					}
-				//swap(arr[j], arr[j + 1]);
-				cout << "\nFINAL\n";
+				cout << "\nSorted List:\n";
 				Account_List.Display_list();
 			}
 			break;
@@ -168,12 +157,11 @@ int main()
 			cout << "# of Accounts:" << Account_List.Number_of_Nodes() << endl;
 			A.Account_Creation();
 			Account_List.insert_end(A);
-			Display_HeadTail(Account_List);
 			A.~Account();
 			break;
 		}//end of Case 1
 		case 2: //Manage Accounts
-		{	//Node* Account;
+		{
 			system("CLS");
 			cout << "Select Account To Manage" << endl;
 			Account_List.Display_list();
@@ -223,14 +211,13 @@ int main()
 		{
 			system("CLS");
 			cout << "Select Account To Deposit Money Into" << endl;
-			cout << "0. Cancel";
 			Account_List.Display_list();
+			cout << "\n0. Cancel";
 			Input[1] = _getch() - '0';
 			validate_Input(0, Input[1], Account_List.Number_of_Nodes());
 			if (Input[1] == 0)
 				break;
 			Account_List.get_Account_Node(Input[1])->Account_Data.Deposit();
-			//A[Input[1]].Deposit();
 			break;
 		}//end of Case 3
 		case 4: //Withdraw Money
@@ -250,7 +237,7 @@ int main()
 			Account_List.Display_list();
 			Input[0] = _getch() - '0';
 			validate_Input(1, Input[0], Account_List.Number_of_Nodes()); //Input validation
-			cout << "Enter the 4-digit PIN. perform Transaction:" << Account_List.get_Account_Node(Input[0])->Account_Data.getPIN();//REMOVE THIS
+			cout << "Enter the 4-digit PIN to perform Transaction:" << Account_List.get_Account_Node(Input[0])->Account_Data.getPIN() << endl;//REMOVE THIS
 			for (loop = 0; loop < 4; loop++)
 			{
 				PIN[loop] = _getch();	//User Entering PIN
@@ -267,7 +254,7 @@ int main()
 				}
 				cout << "*";
 			}PIN[4] = '\0';
-			if (!(strcmp(Account_List.get_Account_Node(Input[0])->Account_Data.getPIN(), PIN))) //PIN Matching//			if (!(strcmp(A[Input[0]].getPIN(), PIN))) //PIN Matching
+			if (!(strcmp(Account_List.get_Account_Node(Input[0])->Account_Data.getPIN(), PIN))) //PIN Matching
 			{
 				cout << "\nSelect Account To Transfer Amount TO:";
 				Input[1] = _getch() - '0';	validate_Input(1, Input[1], Account_List.Number_of_Nodes());//Input validation
