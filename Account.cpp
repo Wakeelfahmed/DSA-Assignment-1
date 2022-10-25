@@ -150,12 +150,15 @@ void Account::saving_dedution(long double balance) {
 	}
 }
 Account::~Account() {
-	isActive = 0; Balance = 0; Account_Num = ""; strcpy_s(Name, "");
+	//isActive = 0; Balance = 0; Account_Num = ""; strcpy_s(Name, "");
 } // Destructor
 bool Account::operator==(Account Account_2) const
 {
-
-	if (Account_Num == Account_2.get_AccountNo() && !strcmp(Name, Account_2.get_Account_Holder_Name()))
+	if (Account_Num == Account_2.get_AccountNo()
+		&& !strcmp(Name, Account_2.get_Account_Holder_Name())
+		&& Account_Type == Account_2.Account_Type
+		&& !strcmp(PIN, Account_2.getPIN())
+		)
 		return 1;
 	return 0;
 }

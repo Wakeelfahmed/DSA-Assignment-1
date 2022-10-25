@@ -165,4 +165,3 @@ Node* list::get_Account_Node(int i) const {
 		loop = loop->next;
 	}
 }
-
