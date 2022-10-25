@@ -137,15 +137,23 @@ int main()
 			}
 			else if (Input[0] == 3) {
 				int i, j; int ans;
-				for (i = 1; i <= Account_List.Number_of_Nodes(); i++)
+				cout << "list before sorting\n";
+				Account_List.Display_list();
+				for (i = 1; i <= Account_List.Number_of_Nodes(); i++) {
+					cout << "\t\tROUND " << i << endl;
 					for (j = 1; j <= Account_List.Number_of_Nodes() - i; j++) {
-						ans = strcmp(Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name(), Account_List.get_Account_Node(j + i)->Account_Data.get_Account_Holder_Name());
+						cout << "strcmp: " << Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name() << "   " << Account_List.get_Account_Node(j + 1)->Account_Data.get_Account_Holder_Name() << endl;
+						ans = strcmp(Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name(), Account_List.get_Account_Node(j + 1)->Account_Data.get_Account_Holder_Name());
+						cout << "ANS:" << ans << endl;
 						if (ans == 1) {
+							cout << "\tInserting:" << Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name() << endl;
+							cout << "\tAfter:" << Account_List.get_Account_Node(j + 1)->Account_Data.get_Account_Holder_Name() << endl;
 							Account_List.insert_after(Account_List.get_Account_Node(j + 1)->Account_Data, Account_List.get_Account_Node(j)->Account_Data);
-							if (i != Account_List.Number_of_Nodes())
-								Account_List.delete_Account_Node_fr_list(Account_List.get_Account_Node(j)->Account_Data);
+							Account_List.delete_Account_Node_fr_list(Account_List.get_Account_Node(j)->Account_Data);
 						}
+						if (Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name() > Account_List.get_Account_Node(j + i)->Account_Data.get_Account_Holder_Name());
 					}
+				}
 				cout << "\nSorted List:\n";
 				Account_List.Display_list();
 			}
