@@ -1,0 +1,21 @@
+Account '1' Details:
+AccountNo:015GRQ6OJ8
+Account Holder Name:Wakeel
+Balance:Rs.123134/-
+Active Status:Active
+Minimum Balance:Rs.5000/-
+Account Type:Current Account
+Account '2' Details:
+AccountNo:3ES3SMBGUG
+Account Holder Name:Newaccount
+Balance:Rs.3214/-
+Active Status:Dormant
+Minimum Balance:Rs.5000/-
+Account Type:Current Account
+Account '3' Details:
+AccountNo:ZJSZF9891O
+Account Holder Name:NEW2
+Balance:Rs.41386/-
+Active Status:Active
+Minimum Balance:Rs.5000/-
+Account Type:Current Account

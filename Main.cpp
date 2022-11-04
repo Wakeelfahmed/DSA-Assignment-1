@@ -78,7 +78,7 @@ int UI_Input = 0, Input[2];
 char PIN[5];
 void Sort(list& Account_List, int Opertaion_to_perform) {
 	int j;
-	cout << "list before sorting\n";
+	cout << "List Before Sorting\n";
 	Account_List.Display_list();
 	for (loop = 1; loop <= Account_List.Number_of_Nodes(); loop++) {
 		for (j = 1; j <= Account_List.Number_of_Nodes() - loop; j++) {
@@ -142,46 +142,31 @@ int main()
 				ExportAsReadable(Account_List);
 			else if (Input[0] == 3) {
 				ExportAsBackup(Account_List);
-				cout << "Data has been successfully exported\n";
+				cout << "Data Has Been Successfully Exported\n";
 			}
 			else if (Input[0] == 4) {
-				cout << "1. Sort Alphabetically (asc)\t2. Sort Alphabetically (des)\t3.Reverse List\n";
+				system("CLS");
+				cout << "1. Sort Alphabetically (asc)\t2. Sort Alphabetically (desc)\t3.Reverse List\n";
 				Input[0] = _getch() - '0';
 				if (Input[0] == 1)
 					Sort(Account_List, 1);
 				else if (Input[0] == 2)
 					Sort(Account_List, -1);
 				else if (Input[0] == 3) {
-					Account_List.Display_list(); cout << endl;
-					int half = Account_List.Number_of_Nodes() / 2;
-					int total = Account_List.Number_of_Nodes();
-					int i = 0;
-					for (loop = 0; loop <= Account_List.Number_of_Nodes(); loop++)
-					{
-						i++;
-						Account_List.insert_specfic_Position(i,Account_List.get_Account_Node(total)->Account_Data);
-						//Account_List.delete_Account_Node_fr_list(Account_List.get_Account_Node(total)->Account_Data);
-						Account_List.Display_list(); cout << endl;
-						_getch();
-					}
-					cout << "\nFINAL\n";
-					Account_List.Display_list();
-					/*int j;
+					int j;
 					cout << "List Before Reversing\n";
 					Account_List.Display_list();
 					for (loop = 1; loop <= Account_List.Number_of_Nodes(); loop++) {
 						for (j = 1; j <= Account_List.Number_of_Nodes() - loop; j++) {
 							if (strcmp(Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name(), Account_List.get_Account_Node(j + 1)->Account_Data.get_Account_Holder_Name())) {
-								cout << "ANS:" << strcmp(Account_List.get_Account_Node(j)->Account_Data.get_Account_Holder_Name(), Account_List.get_Account_Node(j + 1)->Account_Data.get_Account_Holder_Name()) << " ";
 								Account_List.insert_after(Account_List.get_Account_Node(j + 1)->Account_Data, Account_List.get_Account_Node(j)->Account_Data);
 								Account_List.delete_Account_Node_fr_list(Account_List.get_Account_Node(j)->Account_Data);
 							}
 						}
 					}
 					cout << "\Reversed List:\n";
-					Account_List.Display_list();*/
+					Account_List.Display_list();
 				}
-				//Sort(Account_List, -1);
 			}
 			break;
 		}
