@@ -15,12 +15,12 @@ private:
 	string Account_Num;		//Account Number
 	long double Balance;	//Total Balance in the account
 	bool isActive;			//True if the account is active else false
-	int Minimum_Balance;	//Minimum balance that must be maintained
+	short Minimum_Balance;	//Minimum balance that must be maintained
 	char Account_Type;		//'S' for saving and 'C' for current 
 	char PIN[5];
 public:
 	Account();//Default Constructor
-	Account(char*, string, long double, string, int, string, char*);//Parametrized Constructor
+	Account(char*, string, long double, string, short, string, char*);//Parametrized Constructor
 	void Account_Creation();
 	void set_PIN();
 	void set_Name(char *);
@@ -28,13 +28,13 @@ public:
 	void set_balance(long double a);
 	void update_balance(long double a);
 	void setisActive(bool truefalse);
-	void set_MinBalance(int Minimum_Balance);
+	void set_MinBalance(short Minimum_Balance);
 	void set_accountType(char);
 	void get() const;
 	string get_AccountNo() const;
 	char* get_Account_Holder_Name();
 	long double get_balance() const;
-	int get_minBalance();
+	short get_minBalance();
 	bool is_current_or_saving_accountType() const;
 	void Deposit();
 	char* getPIN();

@@ -14,8 +14,8 @@ void list::insert_beg(Account Account) {
 		New_Node->next = head;
 	head = New_Node;
 }
-void list::insert_specfic_Position(int place, Account Account) {
-	int position_count = 1;
+void list::insert_specfic_Position(short place, Account Account) {
+	short position_count = 1;
 	if (place > Number_of_Nodes()) {
 		cout << "List has less nodes than the place, Node CAN't be inserted!!\n";
 		return;
@@ -48,7 +48,7 @@ void list::insert_after(Account PreviousAcc, Account NewAcc) {
 		return;
 	}
 	Node* p = head;
-	int position_count = 1;
+	short position_count = 1;
 	while (p != NULL)
 	{
 		if (p->Account_Data == PreviousAcc)
@@ -82,7 +82,7 @@ void list::insert_end(Account Account) {
 }
 void list::Display_list() const {
 	Node* loop = head;
-	int count = 1;
+	short count = 1;
 	while (loop != NULL)
 	{
 		cout << count << ". " << loop->Account_Data.get_Account_Holder_Name() << endl;
@@ -90,8 +90,8 @@ void list::Display_list() const {
 		count++;
 	}
 }
-int list::Number_of_Nodes() const {
-	Node* loop = head;		int NumberofNodes = 0;
+short list::Number_of_Nodes() const {
+	Node* loop = head;		short NumberofNodes = 0;
 	while (loop != NULL)
 	{
 		NumberofNodes++;
@@ -99,9 +99,9 @@ int list::Number_of_Nodes() const {
 	}
 	return NumberofNodes;
 }
-int Search_in_List(Account Account_to_search, list list) {
+short Search_in_List(Account Account_to_search, list list) {
 	Node* p = list.get_head();
-	int count = 1;
+	short count = 1;
 	while (p != NULL)
 	{
 		if (Account_to_search == p->Account_Data)
@@ -141,9 +141,9 @@ void list::delete_Account_Node_fr_list(Account Account_to_delete) {
 		p = p->next;
 	}
 }\
-void list::Display_Node(int i) const {
+void list::Display_Node(short i) const {
 	Node* loop = head;
-	int count = 1;
+	short count = 1;
 	while (loop != NULL)
 	{
 		if (count == i) {
@@ -153,9 +153,9 @@ void list::Display_Node(int i) const {
 		loop = loop->next;
 	}
 }
-Node* list::get_Account_Node(int i) const {
+Node* list::get_Account_Node(short i) const {
 	Node* loop = head;
-	int count = 1;
+	short count = 1;
 	while (loop != NULL)
 	{
 		if (count == i) {

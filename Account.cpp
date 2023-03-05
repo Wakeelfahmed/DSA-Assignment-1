@@ -1,6 +1,6 @@
 #include "Account.h"
 Account::Account() :Name(""), Balance(0), isActive(0), Minimum_Balance(0), Account_Type('S'), PIN("0000") {}
-Account::Account(char* Name, string Account_Num, long double Balance, string isActive, int Minimum_Balance, string accountType, char* PIN)//Parametrized Constructor
+Account::Account(char* Name, string Account_Num, long double Balance, string isActive, short Minimum_Balance, string accountType, char* PIN)//Parametrized Constructor
 {
 	strcpy_s(this->Name, Name);			this->Account_Num = Account_Num;		this->Balance = Balance;
 	if (isActive == "Active")
@@ -28,9 +28,9 @@ void Account::Account_Creation() {
 	else
 		Minimum_Balance = 1000;
 	cout << "AccountNo Assigned:";
-	for (int i = 0; i < 10; i++)
+	for (short i = 0; i < 10; i++)
 	{
-		int randomNum; char random;
+		short randomNum; char random;
 		randomNum = rand() % 101;
 		if (randomNum >= 50)
 		{
@@ -53,7 +53,7 @@ void Account::Account_Creation() {
 	cout << "PIN Assigned:" << PIN << endl;
 }
 void Account::set_PIN() {
-	for (int i = 0; i < 4; i++)
+	for (short i = 0; i < 4; i++)
 		PIN[i] = 48 + rand() % 10;
 	PIN[4] = '\0';
 }
@@ -62,7 +62,7 @@ void Account::set_accountNo(string AccountNum) { this->Account_Num = AccountNum;
 void Account::set_balance(long double a) { Balance = a; }
 void Account::update_balance(long double a) { Balance = Balance + a; }
 void Account::setisActive(bool truefalse) { isActive = truefalse; }
-void Account::set_MinBalance(int Minimum_Balance) { this->Minimum_Balance = Minimum_Balance; }
+void Account::set_MinBalance(short Minimum_Balance) { this->Minimum_Balance = Minimum_Balance; }
 void Account::set_accountType(char ch) { Account_Type = ch; }
 void Account::get() const
 {
@@ -83,7 +83,7 @@ void Account::get() const
 string Account::get_AccountNo() const { return Account_Num; }
 char* Account::get_Account_Holder_Name() { return Name; }
 long double Account::get_balance()  const { return Balance; }
-int Account::get_minBalance() {
+short Account::get_minBalance() {
 	if (Account_Type == 'C' || Account_Type == 'c')
 		Minimum_Balance = 5000;
 	else if (Account_Type == 'S' || Account_Type == 's')

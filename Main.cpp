@@ -1,3 +1,4 @@
+#include<Windows.h>
 #include"List.h"
 int loop = 1;
 bool transfer(Account& source, Account& destination, long double amount)
@@ -58,7 +59,7 @@ void ExportAsBackup(list Account_List) {
 		Accoufile << Account_List.get_Account_Node(loop)->Account_Data.getPIN();
 	}
 }
-void validate_Input(int start, int& input, int end) {
+void validate_Input(short start, short& input, short end) {
 	while (input < start || input > end)
 		input = _getch() - '0';
 }
@@ -74,10 +75,10 @@ void FindAccount(list list, string Account_No) {
 	}
 }
 Account A; //Global (class)Account Object array.
-int UI_Input = 0, Input[2];
+short UI_Input = 0, Input[2];
 char PIN[5];
-void Sort(list& Account_List, int Opertaion_to_perform) {
-	int j;
+void Sort(list& Account_List, short Opertaion_to_perform) {
+	short j;
 	cout << "List Before Sorting\n";
 	Account_List.Display_list();
 	for (loop = 1; loop <= Account_List.Number_of_Nodes(); loop++) {
@@ -94,8 +95,8 @@ void Sort(list& Account_List, int Opertaion_to_perform) {
 void read_and_store_accounts(list& Account_list)
 {
 	string FileCheck, AccountStatus, AccountType, Account_Num;
-	char Name[100];  long double Balance;	int Minimum_Ba;
-	bool isactive;
+	char Name[100];  long double Balance;	short Minimum_Ba;
+	//bool isactive;
 	ifstream AccoutFile("AccountsSeverDataBase.txt");
 	if (!AccoutFile)
 	{
@@ -153,7 +154,7 @@ int main()
 				else if (Input[0] == 2)
 					Sort(Account_List, -1);
 				else if (Input[0] == 3) {
-					int j;
+					short j;
 					cout << "List Before Reversing\n";
 					Account_List.Display_list();
 					for (loop = 1; loop <= Account_List.Number_of_Nodes(); loop++) {
@@ -164,7 +165,7 @@ int main()
 							}
 						}
 					}
-					cout << "\Reversed List:\n";
+					cout << "Reversed List:\n";
 					Account_List.Display_list();
 				}
 			}
@@ -295,9 +296,19 @@ int main()
 				<< "\t4. Withdraw Money\t";
 			if (Account_List.Number_of_Nodes() >= 2)
 				cout << "5. Transfer Funds\n";
-			cout << "6. Exit Program" << endl;
 		}
+		else {
+			cout << "\x1b[38;5;8m2. Manage Accounts" << "\n3. Deposit Money\t"
+				<< "\t4. Withdraw Money\t";
+			if (Account_List.Number_of_Nodes() >= 2)
+				cout << "\x1b[38;5;255m5. Transfer Funds\n";
+			else
+				cout << "5. Transfer Funds\n";
+		}
+		cout << "\x1b[38;5;255m6. Exit Program" << endl;
 		UI_Input = _getch() - '0';
+		if (UI_Input == 6)
+			exit(0);
 		if (Account_List.Number_of_Nodes() == 0)
 			validate_Input(0, UI_Input, 1);//Import and creation allowed only
 		else if (Account_List.Number_of_Nodes() == 1)
